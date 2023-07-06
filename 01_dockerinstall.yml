@@ -22,7 +22,7 @@
 
     - name: Get vault user uid
       ansible.builtin.debug:
-        msg: "{{ uservault }}[uid]"
+        msg: "{{ uservault }}.[uid]"
 
     - name: Pull vault image
       containers.podman.podman_image:
