@@ -21,8 +21,9 @@
       register: uservault
 
     - name: Get vault user uid
-      ansible.builtin.debug:
-        msg: "{{ uservault['uid'] }}"
+      ansible.builtin.shell: |
+        loginctl enable-linger "{{ uservault['uid'] }}"
+      become: true
 
     - name: Pull vault image
       containers.podman.podman_image:
