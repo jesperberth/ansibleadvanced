@@ -50,3 +50,19 @@
         mode: '0644'
       become_user: vault
       become: true
+
+    - name: Run vault container
+      containers.podman.podman_container:
+        name: vault
+        image: docker.io/library/vault:1.13.3
+        volume:
+          - $HOME/vault/logs:/vault/logs
+          - $HOME/vault/config:/vault/config:z
+          - $HOME/vault/file:/vault/file
+        ports:
+          - "8200:8200"
+        env:
+          SKIP_CHOWN: true
+          SKIP_SETCAP: true
+        command: server
+        
