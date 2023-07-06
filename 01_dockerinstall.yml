@@ -19,8 +19,6 @@
     - name: Pull vault image
       containers.podman.podman_image:
         name: docker.io/library/vault:1.13.3
-      become_user: vault
-      become: true
 
     - name: Create directories for vault
       ansible.builtin.file:
@@ -30,5 +28,3 @@
           - vault/config
         state: directory
         mode: '0755'
-      become_user: vault
-      become: true
