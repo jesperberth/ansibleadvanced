@@ -18,6 +18,11 @@
         shell: /bin/bash
         home: /home/vault
       become: true
+      register: uservault
+
+    - name: Get vault user uid
+      ansible.builtin.debug:
+        msg: "{{ uservault }}"
 
     - name: Pull vault image
       containers.podman.podman_image:
