@@ -20,7 +20,7 @@
       become: true
       register: uservault
 
-    - name: Get vault user uid
+    - name: Enable linger for vault user
       ansible.builtin.shell: |
         loginctl enable-linger "{{ uservault['uid'] }}"
       become: true
@@ -40,5 +40,12 @@
         - /home/vault/vault/logs
         - /home/vault/vault/file
         - /home/vault/vault/config
+      become_user: vault
+      become: true
+
+    - name: Copy Vault Config
+      ansible.builtin.template:
+        src: files/vault.local.json.j2
+        dest: $HOME/vault/config/local.json
       become_user: vault
       become: true
