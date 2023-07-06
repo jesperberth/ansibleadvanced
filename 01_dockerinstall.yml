@@ -1,22 +1,20 @@
 ---
 - name: Install Vault
   hosts: localhost
-  become_user: vault
-  become: true
 
   tasks:
-    # - name: Install podman
-    #   ansible.builtin.package:
-    #     name: podman
-    #     state: present
-    #   become: true
+    - name: Install podman
+      ansible.builtin.package:
+        name: podman
+        state: present
+      become: true
 
-    # - name: Create Vault User
-    #   ansible.builtin.user:
-    #     name: vault
-    #     shell: /bin/bash
-    #     home: /home/vault
-    #   become: true
+    - name: Create Vault User
+      ansible.builtin.user:
+        name: vault
+        shell: /bin/bash
+        home: /home/vault
+      become: true
 
     - name: Pull vault image
       containers.podman.podman_image:
@@ -31,3 +29,5 @@
         - /home/vault/vault/logs
         - /home/vault/vault/file
         - /home/vault/vault/config
+      become_user: vault
+      become: true
