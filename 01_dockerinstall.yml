@@ -1,21 +1,22 @@
 ---
 - name: Install Docker
   hosts: localhost
-  become: true
 
   tasks:
     - name: Install podman
       ansible.builtin.package:
         name: podman
         state: present
+      become: true
 
     - name: Create Vault User
       ansible.builtin.user:
         name: vault
         shell: /bin/bash
         home: /home/vault
+      become: true
 
     - name: Pull an vault image
       containers.podman.podman_image:
         name: docker.io/library/vault:1.13.3
-      become_user: "{{ ansible_user }}"
+      become_user: vault
