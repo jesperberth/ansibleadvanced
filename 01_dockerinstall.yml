@@ -35,7 +35,7 @@
       ansible.builtin.file:
         name: "{{ item }}"
         state: directory
-        mode: '0755'
+        mode: '0776'
       loop:
         - /home/vault/vault/logs
         - /home/vault/vault/file
