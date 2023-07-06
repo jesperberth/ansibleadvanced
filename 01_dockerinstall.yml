@@ -53,7 +53,7 @@
 
     - name: Run vault container
       ansible.builtin.shell: |
-        podman run -d --cap-add=IPC_LOCK -v $HOME/vault/logs:/vault/logs -v $HOME/vault/config:/vault/config:z -v $HOME/vault/file:/vault/file  -e 'SKIP_CHOWN=true' -e 'SKIP_SETCAP=true' -p 8200:8200 docker.io/library/vault:1.13.3 server
+        podman run -d --cap-add=IPC_LOCK -v $HOME/vault/logs:/vault/logs:z -v $HOME/vault/config:/vault/config:z -v $HOME/vault/file:/vault/file:z  -e 'SKIP_CHOWN=true' -e 'SKIP_SETCAP=true' -p 8200:8200 docker.io/library/vault:1.13.3 server
       become_user: vault
       become: true
 
