@@ -17,4 +17,4 @@
 
     - name: Pull an vault image
       containers.podman.podman_image:
-        name: docker.io/vault:latest
+        name: docker.io/library/vault:1.13.3
