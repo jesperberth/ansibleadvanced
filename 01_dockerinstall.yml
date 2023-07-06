@@ -1,5 +1,5 @@
 ---
-- name: Install Docker
+- name: Install Vault
   hosts: localhost
 
   tasks:
@@ -22,9 +22,10 @@
 
     - name: Create directories for vault
       ansible.builtin.file:
-        name:
-          - vault/logs
-          - vault/file
-          - vault/config
+        name: "{{ item }}"
         state: directory
         mode: '0755'
+      loop:
+        - /home/vault/vault/logs
+        - /home/vault/vault/file
+        - /home/vault/vault/config
