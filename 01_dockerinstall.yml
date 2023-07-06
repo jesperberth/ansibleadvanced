@@ -65,4 +65,5 @@
           SKIP_CHOWN: true
           SKIP_SETCAP: true
         command: server
-        
+      become_user: vault
+      become: true
