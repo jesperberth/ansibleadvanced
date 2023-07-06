@@ -16,7 +16,7 @@
       ansible.builtin.yum_repository:
         name: docker-ce
         description: Docker CE Repo
-        baseurl: https://download.docker.com/linux/rhel/docker-ce.repo
+        baseurl: https://download.docker.com/linux/centos/docker-ce.repo
 
     - name: Install docker-ce
       ansible.builtin.package:
