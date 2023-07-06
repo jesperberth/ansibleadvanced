@@ -47,5 +47,6 @@
       ansible.builtin.template:
         src: files/vault.local.json.j2
         dest: $HOME/vault/config/local.json
+        mode: '0644'
       become_user: vault
       become: true
