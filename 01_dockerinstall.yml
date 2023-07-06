@@ -4,10 +4,17 @@
   become: true
 
   tasks:
-    - name: Install prerequisits
+    - name: Install podman
       ansible.builtin.package:
-        name:
-          - yum-utils
-          - device-mapper-persistent-data
-          - lvm2
-        state: absent
+        name: podman
+        state: present
+
+    - name: Create Vault User
+      ansible.builtin.user:
+        name: vault
+        shell: /bin/bash
+        home: /home/vault
+
+    - name: Pull an vault image
+      containers.podman.podman_image:
+        name: vault
