@@ -55,10 +55,10 @@
       containers.podman.podman_container:
         name: vault
         image: docker.io/library/vault:1.13.3
-        volume:
-          - $HOME/vault/logs:/vault/logs
-          - $HOME/vault/config:/vault/config:z
-          - $HOME/vault/file:/vault/file
+        mount:
+          - "type=bind,source=$HOME/vault/logs,destination=/vault/logs"
+          - "type=bind,source=$HOME/vault/config,destination=/vault/config"
+          - "type=bind,source=$HOME/vault/file,destination=/vault/file"
         ports:
           - "8200:8200"
         env:
