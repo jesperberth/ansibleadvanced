@@ -110,7 +110,7 @@
       ansible.builtin.copy:
         content: "{{ initvault['json'] }}"
         dest: ~/secret.json
-        mode: 0700
+        mode: '0700'
       when: not vaultstatus
 
     - name: Set vault keys
