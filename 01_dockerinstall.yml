@@ -70,14 +70,6 @@
       ansible.builtin.set_fact:
         vaultstatus: "{{ vaultinitstatus['json']['initialized'] }}"
 
-    - name: Show init
-      ansible.builtin.debug:
-        msg: "{{ vaultinitstatus['json'] }}"
-
-    - name: Show vaultstatus
-      ansible.builtin.debug:
-        msg: "{{ vaultstatus }}"
-
     - name: Init vault
       ansible.builtin.uri:
         url: http://127.0.0.1:8200/v1/sys/init
@@ -93,8 +85,12 @@
       ansible.builtin.debug:
         msg: "{{ initvault['json'] }}"
       when: not vaultstatus
-      
-    # - name: 
+
+    - name: Set vault keys
+      ansible.builtin.set_fact:
+        vaultkeys: "{{ initvault['json']['keys'] }}"
+        vaultkeysbase64: "{{ initvault['json']['keys_base64'] }}"
+        vaultroottoken: "{{ initvault['json']['root_token'] }}"
 
     # - name: Run vault container
     #   containers.podman.podman_container:
