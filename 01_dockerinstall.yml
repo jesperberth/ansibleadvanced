@@ -12,6 +12,13 @@
         state: present
       become: true
 
+    - name: Configure firewalld
+      ansible.posix.firewalld:
+        port: 8200/tcp
+        permanent: true
+        state: enabled
+      notify: reload firewalld
+
     - name: Create Vault User
       ansible.builtin.user:
         name: vault
@@ -107,7 +114,7 @@
 
     - name: Show vault keys
       ansible.builtin.debug:
-        msg "{{ vaultkeys }} - {{ vaultkeysbase64 }} - {{ vaultroottoken }}"
+        msg: "{{ vaultkeys }} - {{ vaultkeysbase64 }} - {{ vaultroottoken }}"
       when: not vaultstatus
 
     # - name: Run vault container
@@ -126,3 +133,8 @@
     #     command: server
     #   become_user: vault
     #   become: true
+  handlers:
+    - name: reload firewalld
+      ansible.builtin.systemd:
+        name: firewalld
+        state: reloaded
