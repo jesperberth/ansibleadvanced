@@ -70,9 +70,13 @@
       ansible.builtin.set_fact:
         containerstatus: "{{ vaultcontainer['containers'] }}"
 
-    - name: debug
+    - name: Debug
       ansible.builtin.debug:
         msg: "{{ containerstatus }}"
+
+    - name: Debug
+      ansible.builtin.debug:
+        msg: "{{ containerstatus['State']['Running'] }}"
 
     - name: Run vault container
       ansible.builtin.shell: |
