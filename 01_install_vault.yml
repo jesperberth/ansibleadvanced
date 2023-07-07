@@ -16,7 +16,7 @@
       ansible.builtin.yum_repository:
         name: hashicorp
         description: HashiCorp repo
-        baseurl: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+        baseurl: https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
       become: true
 
     - name: Install vault
