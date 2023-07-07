@@ -35,7 +35,7 @@
       ansible.builtin.file:
         name: "{{ item }}"
         state: directory
-        mode: '0776'
+        mode: '0777'
       loop:
         - /home/vault/vault/logs
         - /home/vault/vault/file
@@ -56,6 +56,15 @@
         podman run -d --cap-add=IPC_LOCK -v $HOME/vault/logs:/vault/logs:z -v $HOME/vault/config:/vault/config:z -v $HOME/vault/file:/vault/file:z  -e 'SKIP_CHOWN=true' -e 'SKIP_SETCAP=true' -p 8200:8200 docker.io/library/vault:1.13.3 server
       become_user: vault
       become: true
+
+    - name: Init vault
+      ansible.builtin.uri:
+        url: http://127.0.0.1:8200/v1/sys/init
+        method: POST
+        body_format: json
+        status_code: [200, 202]
+        return_content: true
+        body: '{"secret_shares": 1, "secret_threshold": 1}'
 
     # - name: Run vault container
     #   containers.podman.podman_container:
