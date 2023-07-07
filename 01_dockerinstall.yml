@@ -17,7 +17,8 @@
         port: 8200/tcp
         permanent: true
         state: enabled
-      notify: reload firewalld
+      become: true
+      notify: Reload firewalld
 
     - name: Create Vault User
       ansible.builtin.user:
@@ -134,7 +135,8 @@
     #   become_user: vault
     #   become: true
   handlers:
-    - name: reload firewalld
+    - name: Reload firewalld
       ansible.builtin.systemd:
         name: firewalld
         state: reloaded
+      become: true
