@@ -136,13 +136,6 @@
         mode: '0700'
       when: not vaultstatus
 
-    - name: Set vault keys
-      ansible.builtin.set_fact:
-        vaultkeys: "{{ initvault['json']['keys'] }}"
-        vaultkeysbase64: "{{ initvault['json']['keys_base64'] }}"
-        vaultroottoken: "{{ initvault['json']['root_token'] }}"
-      when: not vaultstatus
-
     - name: Read secret file
       ansible.builtin.set_fact:
         secret: "{{ lookup('file', '~/secret.json') | from_json }}"
@@ -150,6 +143,7 @@
     - name: Set seal key
       ansible.builtin.set_fact:
         keybase64: "{{ secret['keys_base64'][0] }}"
+        token: "{{ secret['root_token'] }}"
 
     - name: Unseal vault
       ansible.builtin.uri:
@@ -159,6 +153,10 @@
         status_code: [200, 202]
         return_content: true
         body: "{\"key\": \"{{ keybase64 }}\"}"
+
+    - name: Show Token
+      ansible.builtin.debug:
+        msg: "{{ token }}"
 
   handlers:
     - name: Reload firewalld
