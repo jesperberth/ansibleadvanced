@@ -151,10 +151,6 @@
       ansible.builtin.set_fact:
         keybase64: "{{ secret['keys_base64'][0] }}"
 
-    - name: Debug json
-      ansible.builtin.debug:
-        msg: "{{ keybase64 }}"
-
     - name: Unseal vault
       ansible.builtin.uri:
         url: http://127.0.0.1:8200/v1/sys/unseal
