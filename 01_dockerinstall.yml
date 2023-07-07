@@ -118,6 +118,15 @@
         msg: "{{ vaultkeys }} - {{ vaultkeysbase64 }} - {{ vaultroottoken }}"
       when: not vaultstatus
 
+    - name: Unseal vault
+      ansible.builtin.uri:
+        url: http://127.0.0.1:8200/v1/sys/unseal
+        method: POST
+        body_format: json
+        status_code: [200, 202]
+        return_content: true
+        body: '{"key": "{{ vaultkeysbase64 }}"}'
+
     # - name: Run vault container
     #   containers.podman.podman_container:
     #     name: vault
