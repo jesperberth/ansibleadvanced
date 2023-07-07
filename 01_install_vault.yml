@@ -91,11 +91,8 @@
       when: not containerstatus
 
     - name: Start vault container if not running
-      containers.podman.podman_container:
-        name: vault
-        image: docker.io/library/vault:1.13.3
-        state: started
-        command: server
+      ansible.builtin.shell: |
+        podman start vault
       become_user: vault
       become: true
       when: containerstatus and not containerstatusrunning
