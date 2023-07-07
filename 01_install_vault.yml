@@ -89,6 +89,7 @@
     - name: Start vault container if not running
       containers.podman.podman_container:
         name: vault
+        image: docker.io/library/vault:1.13.3
         state: started
       when: containerstatus and not containerstatusrunning
 
