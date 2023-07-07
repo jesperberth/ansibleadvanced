@@ -60,7 +60,16 @@
 
     - name: Debug
       ansible.builtin.debug:
-        msg: "{{ vaultcontainer }}"
+        msg: "{{ vaultcontainer['containers'] }}"
+
+    - name: Set vaultcontainer status
+      ansible.builtin.set_fact:
+        containerstatus: "{{ vaultcontainer['containers'] }}"
+
+    - name: Debug
+      ansible.builtin.debug:
+        msg: "{{ containerstatus }}"
+      when: not containerstatus
 
     # - name: Run vault container
     #   ansible.builtin.shell: |
@@ -102,6 +111,7 @@
         vaultkeys: "{{ initvault['json']['keys'] }}"
         vaultkeysbase64: "{{ initvault['json']['keys_base64'] }}"
         vaultroottoken: "{{ initvault['json']['root_token'] }}"
+      when: not vaultstatus
 
     # - name: Run vault container
     #   containers.podman.podman_container:
