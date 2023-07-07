@@ -64,11 +64,19 @@
         body_format: json
         status_code: [200, 202]
         return_content: true
-      register: vaultstatus
+      register: vaultinitstatus
+
+    - name: Set vault status
+      ansible.builtin.set_fact:
+        vaultstatus: "{{ vaultinitstatus['json']['initialized'] }}"
 
     - name: Show init
       ansible.builtin.debug:
-        msg: "{{ vaultstatus['json'] }}"
+        msg: "{{ vaultinitstatus['json'] }}"
+
+    - name: Show vaultstatus
+      ansible.builtin.debug:
+        msg: "{{ vaultstatus }}"
 
     # - name: Init vault
     #   ansible.builtin.uri:
