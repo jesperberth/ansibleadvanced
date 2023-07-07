@@ -149,7 +149,7 @@
 
     - name: Set seal key
       ansible.builtin.set_fact:
-        keybase64: "{{ secret['keys_base64'] }}"
+        keybase64: "{{ secret['keys_base64'][0] }}"
 
     - name: Debug json
       ansible.builtin.debug:
