@@ -12,19 +12,6 @@
         state: present
       become: true
 
-    - name: Add HashiCorp repository
-      ansible.builtin.yum_repository:
-        name: hashicorp
-        description: HashiCorp repo
-        baseurl: https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
-      become: true
-
-    - name: Install vault
-      ansible.builtin.package:
-        name: vault
-        state: present
-      become: true
-
     - name: Configure firewalld
       ansible.posix.firewalld:
         port: 8200/tcp
