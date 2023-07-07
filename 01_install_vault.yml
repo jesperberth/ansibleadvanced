@@ -71,20 +71,20 @@
         containerstatus: "{{ vaultcontainer['containers'] }}"
         containerstatusrunning: "{{ vaultcontainer['containers'][0]['State']['Running'] }}"
 
-    - name: Debug
-      ansible.builtin.debug:
-        msg: "{{ containerstatus }}"
+    # - name: Debug
+    #   ansible.builtin.debug:
+    #     msg: "{{ containerstatus }}"
 
-    - name: Debug
-      ansible.builtin.debug:
-        msg: "{{ containerstatusrunning }}"
+    # - name: Debug
+    #   ansible.builtin.debug:
+    #     msg: "{{ containerstatusrunning }}"
 
     - name: Run vault container
       ansible.builtin.shell: |
         podman run -d --name vault --cap-add=IPC_LOCK -v $HOME/vault/logs:/vault/logs:z -v $HOME/vault/config:/vault/config:z -v $HOME/vault/file:/vault/file:z  -e 'SKIP_CHOWN=true' -e 'SKIP_SETCAP=true' -p 8200:8200 docker.io/library/vault:1.13.3 server
       become_user: vault
       become: true
-      when: not containerstatus
+      when: not containerstatus or not containerstatusrunning
 
     - name: Check if vault if initialized
       ansible.builtin.uri:
