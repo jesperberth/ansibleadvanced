@@ -90,7 +90,7 @@
       containers.podman.podman_container:
         name: vault
         state: started
-      when: containerstatus or not containerstatusrunning
+      when: containerstatus and not containerstatusrunning
 
     - name: Check if vault if initialized
       ansible.builtin.uri:
