@@ -1,0 +1,305 @@
+{
+    "AppArmorProfile": "",
+    "Args": [
+        "server"
+    ],
+    "BoundingCaps": [
+        "CAP_CHOWN",
+        "CAP_DAC_OVERRIDE",
+        "CAP_FOWNER",
+        "CAP_FSETID",
+        "CAP_IPC_LOCK",
+        "CAP_KILL",
+        "CAP_NET_BIND_SERVICE",
+        "CAP_SETFCAP",
+        "CAP_SETGID",
+        "CAP_SETPCAP",
+        "CAP_SETUID",
+        "CAP_SYS_CHROOT"
+    ],
+    "Config": {
+        "Annotations": {
+            "io.container.manager": "libpod",
+            "org.opencontainers.image.stopSignal": "15"
+        },
+        "AttachStderr": false,
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "Cmd": [
+            "server"
+        ],
+        "CreateCommand": [
+            "podman",
+            "run",
+            "-d",
+            "--name",
+            "vault",
+            "--cap-add=IPC_LOCK",
+            "-v",
+            "/home/vault/vault/logs:/vault/logs:z",
+            "-v",
+            "/home/vault/vault/config:/vault/config:z",
+            "-v",
+            "/home/vault/vault/file:/vault/file:z",
+            "-e",
+            "SKIP_CHOWN=true",
+            "-e",
+            "SKIP_SETCAP=true",
+            "-p",
+            "8200:8200",
+            "docker.io/library/vault:1.13.3",
+            "server"
+        ],
+        "Domainname": "",
+        "Entrypoint": "docker-entrypoint.sh",
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "TERM=xterm",
+            "container=podman",
+            "SKIP_CHOWN=true",
+            "SKIP_SETCAP=true",
+            "HOME=/root",
+            "HOSTNAME=baff12cc49dc"
+        ],
+        "HealthcheckOnFailureAction": "none",
+        "Hostname": "baff12cc49dc",
+        "Image": "docker.io/library/vault:1.13.3",
+        "Labels": null,
+        "OnBuild": null,
+        "OpenStdin": false,
+        "Passwd": true,
+        "StdinOnce": false,
+        "StopSignal": 15,
+        "StopTimeout": 10,
+        "Timeout": 0,
+        "Tty": false,
+        "Umask": "0022",
+        "User": "",
+        "Volumes": null,
+        "WorkingDir": "/",
+        "sdNotifyMode": "container"
+    },
+    "ConmonPidFile": "/tmp/containers-user-1001/containers/overlay-containers/baff12cc49dcf5f3073b8f9a92baf27a9299fd53adf893df543afdba93e0c844/userdata/conmon.pid",
+    "Created": "2023-07-07T10:29:27.71514542Z",
+    "Dependencies": [],
+    "Driver": "overlay",
+    "EffectiveCaps": [
+        "CAP_CHOWN",
+        "CAP_DAC_OVERRIDE",
+        "CAP_FOWNER",
+        "CAP_FSETID",
+        "CAP_IPC_LOCK",
+        "CAP_KILL",
+        "CAP_NET_BIND_SERVICE",
+        "CAP_SETFCAP",
+        "CAP_SETGID",
+        "CAP_SETPCAP",
+        "CAP_SETUID",
+        "CAP_SYS_CHROOT"
+    ],
+    "ExecIDs": [],
+    "GraphDriver": {
+        "Data": {
+            "LowerDir": "/home/vault/.local/share/containers/storage/overlay/59f15eb3db2cbdba8045510c5f868a8879db23a5485787f722bb3b75d36e82c8/diff:/home/vault/.local/share/containers/storage/overlay/cc1ad759ee6f381294ae0605b4becfeb783d0f06835b02d4c7462f81eeec86d1/diff:/home/vault/.local/share/containers/storage/overlay/40732bdab81523d12bc1e83e2b1818396b96a0dfc40a33eb7280ad98e29d73c4/diff:/home/vault/.local/share/containers/storage/overlay/b85b983d024d2f0aa7ddd9582ec267665bfd7a9fdcd8a55e4873dea86973fb49/diff:/home/vault/.local/share/containers/storage/overlay/78a822fe2a2d2c84f3de4a403188c45f623017d6a4521d23047c9fbb0801794c/diff",
+            "UpperDir": "/home/vault/.local/share/containers/storage/overlay/6bef01b40fbaa2a90c431cf44cfa0fd1b1571193071359923b66208d77162be8/diff",
+            "WorkDir": "/home/vault/.local/share/containers/storage/overlay/6bef01b40fbaa2a90c431cf44cfa0fd1b1571193071359923b66208d77162be8/work"
+        },
+        "Name": "overlay"
+    },
+    "HostConfig": {
+        "AutoRemove": false,
+        "Binds": [
+            "/home/vault/vault/config:/vault/config:rw,rprivate,rbind",
+            "/home/vault/vault/file:/vault/file:rw,rprivate,rbind",
+            "/home/vault/vault/logs:/vault/logs:rw,rprivate,rbind"
+        ],
+        "BlkioDeviceReadBps": null,
+        "BlkioDeviceReadIOps": null,
+        "BlkioDeviceWriteBps": null,
+        "BlkioDeviceWriteIOps": null,
+        "BlkioWeight": 0,
+        "BlkioWeightDevice": null,
+        "CapAdd": [
+            "CAP_IPC_LOCK"
+        ],
+        "CapDrop": [],
+        "Cgroup": "",
+        "CgroupConf": null,
+        "CgroupManager": "systemd",
+        "CgroupMode": "private",
+        "CgroupParent": "user.slice",
+        "Cgroups": "default",
+        "ConsoleSize": [
+            0,
+            0
+        ],
+        "ContainerIDFile": "",
+        "CpuCount": 0,
+        "CpuPercent": 0,
+        "CpuPeriod": 0,
+        "CpuQuota": 0,
+        "CpuRealtimePeriod": 0,
+        "CpuRealtimeRuntime": 0,
+        "CpuShares": 0,
+        "CpusetCpus": "",
+        "CpusetMems": "",
+        "Devices": [],
+        "DiskQuota": 0,
+        "Dns": [],
+        "DnsOptions": [],
+        "DnsSearch": [],
+        "ExtraHosts": [],
+        "GroupAdd": [],
+        "IOMaximumBandwidth": 0,
+        "IOMaximumIOps": 0,
+        "IpcMode": "shareable",
+        "Isolation": "",
+        "KernelMemory": 0,
+        "Links": null,
+        "LogConfig": {
+            "Config": null,
+            "Path": "/home/vault/.local/share/containers/storage/overlay-containers/baff12cc49dcf5f3073b8f9a92baf27a9299fd53adf893df543afdba93e0c844/userdata/ctr.log",
+            "Size": "0B",
+            "Tag": "",
+            "Type": "k8s-file"
+        },
+        "Memory": 0,
+        "MemoryReservation": 0,
+        "MemorySwap": 0,
+        "MemorySwappiness": 0,
+        "NanoCpus": 0,
+        "NetworkMode": "slirp4netns",
+        "OomKillDisable": false,
+        "OomScoreAdj": 0,
+        "PidMode": "private",
+        "PidsLimit": 2048,
+        "PortBindings": {
+            "8200/tcp": [
+                {
+                    "HostIp": "",
+                    "HostPort": "8200"
+                }
+            ]
+        },
+        "Privileged": false,
+        "PublishAllPorts": false,
+        "ReadonlyRootfs": false,
+        "RestartPolicy": {
+            "MaximumRetryCount": 0,
+            "Name": ""
+        },
+        "Runtime": "oci",
+        "SecurityOpt": [],
+        "ShmSize": 65536000,
+        "Tmpfs": {},
+        "UTSMode": "private",
+        "Ulimits": [],
+        "UsernsMode": "",
+        "VolumeDriver": "",
+        "VolumesFrom": null
+    },
+    "HostnamePath": "/tmp/containers-user-1001/containers/overlay-containers/baff12cc49dcf5f3073b8f9a92baf27a9299fd53adf893df543afdba93e0c844/userdata/hostname",
+    "HostsPath": "/tmp/containers-user-1001/containers/overlay-containers/baff12cc49dcf5f3073b8f9a92baf27a9299fd53adf893df543afdba93e0c844/userdata/hosts",
+    "Id": "baff12cc49dcf5f3073b8f9a92baf27a9299fd53adf893df543afdba93e0c844",
+    "Image": "896eb481a950ed3ba31e79639c3b430484f3b11fb37b7485dbb8c56274d4816b",
+    "ImageDigest": "sha256:3ef129bc9d6f76da66654599eb56f77b8d2e52ad0605d588d9696efec6df722e",
+    "ImageName": "docker.io/library/vault:1.13.3",
+    "IsInfra": false,
+    "IsService": false,
+    "MountLabel": "system_u:object_r:container_file_t:s0:c294,c631",
+    "Mounts": [
+        {
+            "Destination": "/vault/config",
+            "Driver": "",
+            "Mode": "",
+            "Options": [
+                "rbind"
+            ],
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/home/vault/vault/config",
+            "Type": "bind"
+        },
+        {
+            "Destination": "/vault/file",
+            "Driver": "",
+            "Mode": "",
+            "Options": [
+                "rbind"
+            ],
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/home/vault/vault/file",
+            "Type": "bind"
+        },
+        {
+            "Destination": "/vault/logs",
+            "Driver": "",
+            "Mode": "",
+            "Options": [
+                "rbind"
+            ],
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/home/vault/vault/logs",
+            "Type": "bind"
+        }
+    ],
+    "Name": "vault",
+    "Namespace": "",
+    "NetworkSettings": {
+        "Bridge": "",
+        "EndpointID": "",
+        "Gateway": "",
+        "GlobalIPv6Address": "",
+        "GlobalIPv6PrefixLen": 0,
+        "HairpinMode": false,
+        "IPAddress": "",
+        "IPPrefixLen": 0,
+        "IPv6Gateway": "",
+        "LinkLocalIPv6Address": "",
+        "LinkLocalIPv6PrefixLen": 0,
+        "MacAddress": "",
+        "Ports": {
+            "8200/tcp": [
+                {
+                    "HostIp": "",
+                    "HostPort": "8200"
+                }
+            ]
+        },
+        "SandboxID": "",
+        "SandboxKey": ""
+    },
+    "OCIConfigPath": "/home/vault/.local/share/containers/storage/overlay-containers/baff12cc49dcf5f3073b8f9a92baf27a9299fd53adf893df543afdba93e0c844/userdata/config.json",
+    "OCIRuntime": "crun",
+    "Path": "docker-entrypoint.sh",
+    "PidFile": "/tmp/containers-user-1001/containers/overlay-containers/baff12cc49dcf5f3073b8f9a92baf27a9299fd53adf893df543afdba93e0c844/userdata/pidfile",
+    "Pod": "",
+    "ProcessLabel": "system_u:system_r:container_t:s0:c294,c631",
+    "ResolvConfPath": "/tmp/containers-user-1001/containers/overlay-containers/baff12cc49dcf5f3073b8f9a92baf27a9299fd53adf893df543afdba93e0c844/userdata/resolv.conf",
+    "RestartCount": 0,
+    "Rootfs": "",
+    "State": {
+        "CheckpointedAt": "0001-01-01T00:00:00Z",
+        "Dead": false,
+        "Error": "",
+        "ExitCode": 0,
+        "FinishedAt": "2023-07-07T10:57:24.365290653Z",
+        "Health": {
+            "FailingStreak": 0,
+            "Log": null,
+            "Status": ""
+        },
+        "OOMKilled": false,
+        "OciVersion": "1.1.0-rc.1",
+        "Paused": false,
+        "Pid": 0,
+        "Restarting": false,
+        "RestoredAt": "0001-01-01T00:00:00Z",
+        "Running": false,
+        "StartedAt": "2023-07-07T10:29:27.906072243Z",
+        "Status": "exited"
+    },
+    "StaticDir": "/home/vault/.local/share/containers/storage/overlay-containers/baff12cc49dcf5f3073b8f9a92baf27a9299fd53adf893df543afdba93e0c844/userdata"
+}
