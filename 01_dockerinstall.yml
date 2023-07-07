@@ -78,20 +78,22 @@
       ansible.builtin.debug:
         msg: "{{ vaultstatus }}"
 
-    # - name: Init vault
-    #   ansible.builtin.uri:
-    #     url: http://127.0.0.1:8200/v1/sys/init
-    #     method: POST
-    #     body_format: json
-    #     status_code: [200, 202]
-    #     return_content: true
-    #     body: '{"secret_shares": 1, "secret_threshold": 1}'
-    #   register: initvault
+    - name: Init vault
+      ansible.builtin.uri:
+        url: http://127.0.0.1:8200/v1/sys/init
+        method: POST
+        body_format: json
+        status_code: [200, 202]
+        return_content: true
+        body: '{"secret_shares": 1, "secret_threshold": 1}'
+      register: initvault
+      when: not vaultstatus
 
-    # - name: Show init
-    #   ansible.builtin.debug:
-    #     msg: "{{ initvault['json'] }}"
-
+    - name: Show init
+      ansible.builtin.debug:
+        msg: "{{ initvault['json'] }}"
+      when: not vaultstatus
+      
     # - name: 
 
     # - name: Run vault container
