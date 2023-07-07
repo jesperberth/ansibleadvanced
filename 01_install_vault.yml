@@ -105,6 +105,9 @@
         status_code: [200, 202]
         return_content: true
       register: vaultinitstatus
+      until: "vaultinitstatus.status == 200"
+      retries: 5
+      delay: 10
 
     - name: Set vault status
       ansible.builtin.set_fact:
