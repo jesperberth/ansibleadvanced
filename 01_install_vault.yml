@@ -162,7 +162,7 @@
         body_format: json
         status_code: [200, 202]
         return_content: true
-        body: "{\"key\": \"{{ vaultkeysbase64 }}\"}"
+        body: "{\"key\": \"{{ keybase64 }}\"}"
 
   handlers:
     - name: Reload firewalld
