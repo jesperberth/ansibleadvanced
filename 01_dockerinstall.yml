@@ -65,6 +65,11 @@
         status_code: [200, 202]
         return_content: true
         body: '{"secret_shares": 1, "secret_threshold": 1}'
+      register: initvault
+
+    - name: Show init
+      ansible.builtin.debug:
+        msg: "{{ initvault }}"
 
     # - name: Run vault container
     #   containers.podman.podman_container:
