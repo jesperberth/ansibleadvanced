@@ -146,10 +146,11 @@
     - name: Read secret file
       ansible.builtin.set_fact:
         secret: "{{ lookup('file', '~/secret.json') | from_json }}"
+        keybase64: "{{ secret['keys_base64'] }}"
 
     - name: Debug json
       ansible.builtin.debug:
-        msg: "{{ secret }}"
+        msg: "{{ keybase64 }}"
 
     - name: Unseal vault
       ansible.builtin.uri:
