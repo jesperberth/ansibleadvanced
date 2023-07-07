@@ -54,6 +54,8 @@
     - name: Gather facts on vault container
       containers.podman.podman_container_info:
         name: vault
+      become_user: vault
+      become: true
       register: vaultcontainer
 
     - name: Debug
