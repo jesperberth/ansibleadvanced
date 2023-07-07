@@ -146,6 +146,9 @@
     - name: Read secret file
       ansible.builtin.set_fact:
         secret: "{{ lookup('file', '~/secret.json') | from_json }}"
+
+    - name: Set seal key
+      ansible.builtin.set_fact:
         keybase64: "{{ secret['keys_base64'] }}"
 
     - name: Debug json
