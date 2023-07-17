@@ -6,12 +6,12 @@
     - name: Write Vault
       community.hashi_vault.vault_kv2_write:
         url: http://ansible:8200
-        path: new
+        path: AWX
         auth_method: userpass
         username: write
         password: P@ssw0rd
         data:
-          key: value
+          password: Passw0rd!
       register: key
 
     - name: Write output
