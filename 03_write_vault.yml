@@ -1,0 +1,19 @@
+---
+- name: Write Vault
+  hosts: localhost
+
+  tasks:
+    - name: Write Vault
+      community.hashi_vault.vault_kv2_write:
+        url: http://ansible:8200
+        path: new
+        auth_method: userpass
+        username: write
+        password: P@ssw0rd
+        data:
+          key: value
+      register: key
+
+    - name: Write output
+      ansible.builtin.debug:
+        msg: "{{ key }}"
