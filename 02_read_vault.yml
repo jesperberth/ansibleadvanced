@@ -4,7 +4,7 @@
 
   tasks:
     - name: Read Vault
-      community.hashi_vault.vault_read:
+      community.hashi_vault.vault_kv2_get:
         url: http://ansible:8200
         path: secret/data/azure
         auth_method: userpass
