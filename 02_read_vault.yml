@@ -14,4 +14,4 @@
 
     - name: Write output
       ansible.builtin.debug:
-        msg: "{{ azure['data'] }}"
+        msg: "{{ azure['data']['data']['data'] }}"
