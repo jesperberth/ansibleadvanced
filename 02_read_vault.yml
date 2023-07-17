@@ -1,5 +1,5 @@
 ---
-- name: Install Vault
+- name: Read Vault
   hosts: localhost
 
   tasks:
@@ -14,4 +14,4 @@
 
     - name: Write output
       ansible.builtin.debug:
-        msg: "{{ azure['data']['data']['data'] }}"
+        msg: "{{ azure }}"
