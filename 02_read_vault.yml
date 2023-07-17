@@ -6,7 +6,7 @@
     - name: Read Vault
       community.hashi_vault.vault_read:
         url: http://ansible:8200
-        path: secret/azure
+        path: secret/data/azure
         auth_method: userpass
         username: jesbe
         password: P@ssw0rd
