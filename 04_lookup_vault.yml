@@ -12,7 +12,7 @@
         ansible_hashi_vault_username: '{{ user }}'
         ansible_hashi_vault_password: '{{ pwd }}'
       ansible.builtin.set_fact:
-        response: "{{ lookup('community.hashi_vault.vault_kv2_get', 'azure', url='https://ansible:8200') }}"
+        response: "{{ lookup('community.hashi_vault.vault_kv2_get', 'azure', url='http://ansible:8200') }}"
 
     - name: Show response
       ansible.builtin.debug:
