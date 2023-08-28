@@ -11,10 +11,13 @@
   tasks:
     - name: Get Azure Creds
       ansible.builtin.include_tasks: azure_cred.yml
-    - name: Show Creds
-      ansible.builtin.debug:
-        msg: "{{ azure_env }}"
+
     - name: Get facts for all virtual networks
       azure.azcollection.azure_rm_virtualnetwork_info:
         resource_group: "{{ rgname }}"
       environment: "{{ azure_env }}"
+      register: vnet
+
+    - name: Show Vnet
+      ansible.builtin.debug:
+        msg: "{{ vnet }}"
