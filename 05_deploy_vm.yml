@@ -74,22 +74,12 @@
         auto_upgrade_minor_version: true
       environment: "{{ azure_env }}"
 
-    - name: Get Public Ip
-      azure.azcollection.azure_rm_publicipaddress_info:
-        name: tower_public_ip
-        resource_group: "{{ rgname }}"
-      register: tower_pub_ip
-
-    - name: Debug
-      ansible.builtin.debug:
-        msg: "{{ tower_pub_ip }}"
-
     - name: Wait for ssh on webserver
       ansible.builtin.wait_for:
-        host: "{{ tower_pub_ip.state.ip_address }}"
+        host: tower
         port: 22
         delay: 10
         timeout: 600
 
     - name: Add webserver to ssh known_hosts
-      shell: "ssh-keyscan -t ecdsa {{ tower_pub_ip.state.ip_address }}  >> /home/{{ user }}/.ssh/known_hosts"
+      shell: "ssh-keyscan -t ecdsa tower  >> /home/{{ user }}/.ssh/known_hosts"
