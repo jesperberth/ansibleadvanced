@@ -6,10 +6,8 @@
     user: jesbe
     rgname: "ansible_{{ user }}"
 
+- include_playbook: 04_lookup_vault.yml
   tasks:
-    - name: Vault Lookup  
-      import_playbook: 04_lookup_vault.yml
-
     - name: Get facts for all virtual networks
       azure.azcollection.azure_rm_virtualnetwork_info:
         resource_group: "{{ rgname }}"
