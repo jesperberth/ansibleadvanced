@@ -2,14 +2,14 @@
 - name: Lookup Vault
   hosts: localhost
   vars:
-    user: jesbe
-    pwd: P@ssw0rd
+    vuser: jesbe
+    vpwd: P@ssw0rd
 
   tasks:
     - name: Lookup Vault
       ansible.builtin.set_fact:
-        response: "{{ lookup('community.hashi_vault.vault_kv2_get', 'azure', url='http://ansible:8200', auth_method='userpass', username=user, password=pwd) }}"
+        cred: "{{ lookup('community.hashi_vault.vault_kv2_get', 'azure', url='http://ansible:8200', auth_method='userpass', username=vuser, password=vpwd) }}"
 
     - name: Show response
       ansible.builtin.debug:
-        msg: "{{ response.data }}"
+        msg: "{{ cred.data }}"
