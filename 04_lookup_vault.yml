@@ -1,6 +1,5 @@
 ---
 - name: Lookup Vault
-  hosts: localhost
   vars:
     vuser: jesbe
     vpwd: P@ssw0rd
