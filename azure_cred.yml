@@ -10,7 +10,11 @@
 - name: Set Fact Azure Creds
   ansible.builtin.set_fact:
     azure_env:
-      AZURE_CLIENT_ID: "{{ cred.data.client_id }}"
-      AZURE_SECRET: "{{ cred.data.secret }}"
-      AZURE_SUBSCRIPTION_ID: "{{ cred.data.subscription_id }}"
-      AZURE_TENANT: "{{ cred.data.tenant }}"
+      AZURE_CLIENT_ID: "{{ cred.secret.client_id }}"
+      AZURE_SECRET: "{{ cred.secret.secret }}"
+      AZURE_SUBSCRIPTION_ID: "{{ cred.secret.subscription_id }}"
+      AZURE_TENANT: "{{ cred.secret.tenant }}"
+
+- name: Debug task
+  ansible.builtin.debug:
+    msg: "{{ azure_env }}"
