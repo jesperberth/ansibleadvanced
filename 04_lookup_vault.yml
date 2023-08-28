@@ -1,0 +1,19 @@
+---
+- name: Lookup Vault
+  hosts: localhost
+  vars:
+    user: jesper
+    pwd: P@ssw0rd
+
+  tasks:
+    - name: Lookup Vault
+      vars:
+        ansible_hashi_vault_auth_method: userpass
+        ansible_hashi_vault_username: '{{ user }}'
+        ansible_hashi_vault_password: '{{ pwd }}'
+      ansible.builtin.set_fact:
+        response: "{{ lookup('community.hashi_vault.vault_kv2_get', 'azure', url='https://ansible:8200') }}"
+
+    - name: Show response
+      ansible.builtin.debug:
+        msg: "{{ response }}"

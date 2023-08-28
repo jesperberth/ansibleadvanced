@@ -12,8 +12,8 @@
         password: P@ssw0rd
         data:
           password: Passw0rd!
-      register: key
+      register: output
 
     - name: Write output
       ansible.builtin.debug:
-        msg: "{{ key }}"
+        msg: "{{ output }}"
