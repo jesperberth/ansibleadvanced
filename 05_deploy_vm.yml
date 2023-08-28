@@ -82,4 +82,6 @@
         timeout: 600
 
     - name: Add webserver to ssh known_hosts
-      shell: "ssh-keyscan -t ecdsa tower  >> /home/{{ user }}/.ssh/known_hosts"
+      ansible.builtin.known_hosts:
+        name: tower
+        key: "{{ ssh_public_key }}"
