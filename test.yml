@@ -18,10 +18,6 @@
       environment: "{{ azure_env }}"
       register: vnet
 
-    - name: Show Vnet
-      ansible.builtin.debug:
-        msg: "{{ vnet }}"
-
     - name: Set Vnet facts
       ansible.builtin.set_fact:
         virtualnetwork: "{{ vnet['virtualnetworks'][0]['name'] }}"

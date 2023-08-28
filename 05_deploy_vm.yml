@@ -5,11 +5,27 @@
   vars:
     user: jesbe
     rgname: "ansible_{{ user }}"
+    vuser: jesbe
+    vpwd: P@ssw0rd
     hostname: tower
     ssh_public_key: "{{lookup('file', '~/.ssh/id_rsa.pub') }}"
     tag_project: "AWX_{{ user }}"
 
   tasks:
+    - name: Get Azure Creds
+      ansible.builtin.include_tasks: azure_cred.yml
+
+    - name: Get facts for all virtual networks
+      azure.azcollection.azure_rm_virtualnetwork_info:
+        resource_group: "{{ rgname }}"
+      environment: "{{ azure_env }}"
+      register: vnet
+
+    - name: Set Vnet facts
+      ansible.builtin.set_fact:
+        virtualnetwork: "{{ vnet['virtualnetworks'][0]['name'] }}"
+        subnet: "{{ vnet['virtualnetworks'][0]['subnets'][0]['name'] }}"
+
     - name: Create network interfaces
       azure.azcollection.azure_rm_networkinterface:
         name: "{{ hostname }}_nic01"
