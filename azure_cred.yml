@@ -3,6 +3,10 @@
   ansible.builtin.set_fact:
     cred: "{{ lookup('community.hashi_vault.vault_kv2_get', 'azure', url='http://ansible:8200', auth_method='userpass', username=vuser, password=vpwd) }}"
 
+- name: Debug
+  ansible.builtin.debug:
+    msg: "{{ cred }}"
+
 - name: Set Fact Azure Creds
   ansible.builtin.set_fact:
     azure_env:
