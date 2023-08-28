@@ -4,7 +4,7 @@
 
   vars:
     user: jesbe
-    rgname: "ansible_{{ user }}"
+    rgname: "ansible-{{ user }}"
     vuser: jesbe
     vpwd: P@ssw0rd
     hostname: tower
