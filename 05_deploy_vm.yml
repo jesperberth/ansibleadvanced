@@ -39,7 +39,7 @@
             primary: true
       environment: "{{ azure_env }}"
 
-    - name: Create Virtual Machines
+    - name: Create Virtual Machine
       azure.azcollection.azure_rm_virtualmachine:
         resource_group: "{{ rgname }}"
         name: "{{ hostname }}"
@@ -74,14 +74,14 @@
         auto_upgrade_minor_version: true
       environment: "{{ azure_env }}"
 
-    - name: Wait for ssh on webserver
+    - name: Wait for ssh on tower
       ansible.builtin.wait_for:
         host: tower
         port: 22
         delay: 10
         timeout: 600
 
-    - name: Add webserver to ssh known_hosts
+    - name: Add tower to ssh known_hosts
       ansible.builtin.known_hosts:
         name: tower
-        key: "{{ ssh_public_key }}"
+        key: "tower {{ ssh_public_key }}"
