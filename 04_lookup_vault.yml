@@ -2,7 +2,7 @@
 - name: Lookup Vault
   hosts: localhost
   vars:
-    user: jesper
+    user: jesbe
     pwd: P@ssw0rd
 
   tasks:
