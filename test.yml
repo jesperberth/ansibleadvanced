@@ -12,17 +12,6 @@
     - name: Get Azure Creds
       ansible.builtin.include_tasks: azure_cred.yml
 
-    - name: Get facts for all virtual networks
-      azure.azcollection.azure_rm_virtualnetwork_info:
-        resource_group: "{{ rgname }}"
-      environment: "{{ azure_env }}"
-      register: vnet
-
-    - name: Set Vnet facts
-      ansible.builtin.set_fact:
-        virtualnetwork: "{{ vnet['virtualnetworks'][0]['name'] }}"
-        subnet: "{{ vnet['virtualnetworks'][0]['subnets'][0]['name'] }}"
-
-    - name: Show Vnet
+    - name: Test Set Local env
       ansible.builtin.debug:
-        msg: "{{ virtualnetwork }} and {{ subnet }}"
+        msg: "{{ azure_env }}"
