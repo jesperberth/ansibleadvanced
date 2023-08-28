@@ -37,6 +37,7 @@
           - name: "{{ hostname }}_nic01_ipconfig"
             public_ip_address_name: "{{ hostname }}_public_ip"
             primary: true
+      environment: "{{ azure_env }}"
 
     - name: Create Virtual Machines
       azure.azcollection.azure_rm_virtualmachine:
@@ -59,6 +60,7 @@
         network_interfaces: "{{ hostname }}_nic01"
         tags:
           project: "{{ tag_project }}"
+      environment: "{{ azure_env }}"
 
     - name: Extend var
       azure.azcollection.azure_rm_virtualmachineextension:
@@ -70,3 +72,4 @@
         type_handler_version: "2.1"
         settings: '{"commandToExecute": " lvm lvextend --size 20G /dev/rootvg/varlv && xfs_growfs /dev/mapper/rootvg-varlv", "skipDos2Unix": true}'
         auto_upgrade_minor_version: true
+      environment: "{{ azure_env }}"
