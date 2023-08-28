@@ -5,8 +5,15 @@
   vars:
     user: jesbe
     rgname: "ansible_{{ user }}"
+    vuser: jesbe
+    vpwd: P@ssw0rd
 
   tasks:
+    - name: Get Azure Creds
+      ansible.builtin.include_tasks: azure_cred.yml
+    - name: Show Creds
+      ansible.builtin.debug:
+        msg: "{{ azure_env }}"
     - name: Get facts for all virtual networks
       azure.azcollection.azure_rm_virtualnetwork_info:
         resource_group: "{{ rgname }}"

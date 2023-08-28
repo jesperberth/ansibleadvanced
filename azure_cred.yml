@@ -6,7 +6,7 @@
 - name: Set Fact Azure Creds
   ansible.builtin.set_fact:
     azure_env:
-      AZURE_CLIENT_ID: cred.data
-      AZURE_SECRET:
-      AZURE_SUBSCRIPTION_ID:
-      AZURE_TENANT:
+      AZURE_CLIENT_ID: "{{ cred.data.client_id }}"
+      AZURE_SECRET: "{{ cred.data.secret }}"
+      AZURE_SUBSCRIPTION_ID: "{{ cred.data.subscription_id }}"
+      AZURE_TENANT: "{{ cred.data.tenant }}"
