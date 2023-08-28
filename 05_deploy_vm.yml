@@ -38,6 +38,7 @@
             public_ip_address_name: "{{ hostname }}_public_ip"
             primary: true
       environment: "{{ azure_env }}"
+      register: vnic
 
     - name: Create Virtual Machines
       azure.azcollection.azure_rm_virtualmachine:
@@ -73,3 +74,17 @@
         settings: '{"commandToExecute": " lvm lvextend --size 20G /dev/rootvg/varlv && xfs_growfs /dev/mapper/rootvg-varlv", "skipDos2Unix": true}'
         auto_upgrade_minor_version: true
       environment: "{{ azure_env }}"
+
+    - name: Debug
+      ansible.builtin.debug:
+        msg: "{{ vnic }}"
+
+    - name: Wait for ssh on webserver
+      ansible.builtin.wait_for:
+        host: "{{ webserver_pub_ip.state.ip_address }}"
+        port: 22
+        delay: 10
+        timeout: 600
+
+    - name: Add webserver to ssh known_hosts
+      shell: "ssh-keyscan -t ecdsa {{ webserver_pub_ip.state.ip_address }}  >> /home/{{ user }}/.ssh/known_hosts"
