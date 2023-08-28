@@ -24,9 +24,9 @@
 
     - name: Set Vnet facts
       ansible.builtin.set_fact:
-        virtualnetwork: "{{ vnet['virtualnetworks'][0] }}"
+        virtualnetwork: "{{ vnet['virtualnetworks'][0]['name'] }}"
         subnet: "{{ vnet['virtualnetworks'] }}"
 
     - name: Show Vnet
       ansible.builtin.debug:
-        msg: "{{ virtualnetwork }} and {{ subnet }}"
+        msg: "{{ virtualnetwork }}"
