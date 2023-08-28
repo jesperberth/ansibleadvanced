@@ -1,0 +1,56 @@
+---
+- name: Deploy Tower host in Azure
+  hosts: localhost
+
+  vars:
+    user: jesbe
+    rgname: "ansible_{{ user }}"
+    hostname: tower
+    ssh_public_key: "{{lookup('file', '~/.ssh/id_rsa.pub') }}"
+    tag_project: "AWX_{{ user }}"
+
+  tasks:
+    - name: Create network interfaces
+      azure.azcollection.azure_rm_networkinterface:
+        name: "{{ hostname }}_nic01"
+        resource_group: "{{ rgname }}"
+        virtual_network: "{{ virtualnetwork }}"
+        subnet_name: "{{ subnet }}"
+        security_group: "SG_Network"
+        ip_configurations:
+          - name: "{{ hostname }}_nic01_ipconfig"
+            public_ip_address_name: "{{ hostname }}_public_ip"
+            primary: true
+
+    - name: Create Virtual Machines
+      azure.azcollection.azure_rm_virtualmachine:
+        resource_group: "{{ rgname }}"
+        name: "{{ hostname }}"
+        os_type: "Linux"
+        admin_username: "{{ user }}"
+        ssh_password_enabled: false
+        ssh_public_keys:
+          - path: "/home/{{ user }}/.ssh/authorized_keys"
+            key_data: "{{ ssh_public_key }}"
+        managed_disk_type: Premium_LRS
+        state: present
+        image:
+          offer: "RHEL"
+          publisher: "RedHat"
+          sku: "9_2"
+          version: "latest"
+        vm_size: "Standard_D4ds_v5"
+        network_interfaces: "{{ hostname }}_nic01"
+        tags:
+          project: "{{ tag_project }}"
+
+    - name: Extend var
+      azure.azcollection.azure_rm_virtualmachineextension:
+        name: Extend_Var
+        resource_group: "{{ rgname }}"
+        virtual_machine_name: "{{ hostname }}"
+        publisher: Microsoft.Azure.Extensions
+        virtual_machine_extension_type: CustomScript
+        type_handler_version: "2.1"
+        settings: '{"commandToExecute": " lvm lvextend --size 20G /dev/rootvg/varlv && xfs_growfs /dev/mapper/rootvg-varlv", "skipDos2Unix": true}'
+        auto_upgrade_minor_version: true

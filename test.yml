@@ -1,0 +1,12 @@
+---
+- name: Test
+  hosts: localhost
+
+  vars:
+    user: jesbe
+    rgname: "ansible_{{ user }}"
+
+  tasks:
+  - name: Get facts for all virtual networks
+    azure.azcollection.azure_rm_virtualnetwork_info:
+      resource_group: "{{ rgname }}"
