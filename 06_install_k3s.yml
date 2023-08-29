@@ -57,12 +57,13 @@
         url: "https://get.k3s.io"
         dest: ~/install-k3s.sh
         mode: "0700"
-#    - name: Install K3s
-#      ansible.builtin.shell: curl -sfL https://get.k3s.io | sh -
-#      when: not k3s_result.stat.exists
 
-#    - name: Set kubeconfig ENV
-#      ansible.builtin.lineinfile:
-#        path: /etc/environment
-#        state: present
-#        line: KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+    - name: Install K3s
+      ansible.builtin.shell: ~/install-k3s.sh
+      when: not k3s_result.stat.exists
+
+    - name: Set kubeconfig ENV
+      ansible.builtin.lineinfile:
+        path: /etc/environment
+        state: present
+        line: KUBECONFIG=/etc/rancher/k3s/k3s.yaml
