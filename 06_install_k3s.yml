@@ -1,0 +1,65 @@
+---
+- name: Lookup Vault
+  hosts: awx
+
+  tasks:
+    - name: Update System Packages
+      ansible.builtin.package:
+        name: "*"
+        state: latest
+
+    - name: Install requried Packages
+      ansible.builtin.package:
+        name: git
+        state: present
+
+    - name: Download Kubectl release
+      ansible.builtin.get_url:
+        url: "https://storage.googleapis.com/kubernetes-release/release/stable.txt"
+        dest: "~/stable.txt"
+
+    - name: Set Kubectl release
+      ansible.builtin.slurp:
+        src: "~/stable.txt"
+      register: kubectlver
+
+    - name: Set Kubectl_ver release variable
+      ansible.builtin.set_fact:
+        kubectl_ver: "{{ kubectlver['content'] | b64decode }}"
+
+    - name: Download Kubectl
+      ansible.builtin.get_url:
+        url: "https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_ver }}/bin/linux/amd64/kubectl"
+        dest: "/usr/local/bin/kubectl"
+
+#    - name: Make kubectl executable
+#      ansible.builtin.file:
+#        path: "/usr/local/bin/kubectl"
+#        mode: +x
+
+    - name: Create a symbolic link kubectl
+      ansible.builtin.file:
+        src: "/usr/local/bin/kubectl"
+        dest: "/usr/bin/kubectl"
+        state: link
+
+    - name: Disable firewalld
+      ansible.builtin.systemd:
+        name: firewalld
+        state: stopped
+        enabled: false
+
+    - name: Check if K3s installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/k3s
+      register: k3s_result
+
+#    - name: Install K3s
+#      ansible.builtin.shell: curl -sfL https://get.k3s.io | sh -
+#      when: not k3s_result.stat.exists
+
+#    - name: Set kubeconfig ENV
+#      ansible.builtin.lineinfile:
+#        path: /etc/environment
+#        state: present
+#        line: KUBECONFIG=/etc/rancher/k3s/k3s.yaml
