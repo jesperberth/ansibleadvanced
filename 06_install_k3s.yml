@@ -55,7 +55,7 @@
     - name: Download k3s.io
       ansible.builtin.get_url:
         url: "https://get.k3s.io"
-        dest: .
+        dest: ~/install-k3s.sh
         mode: "0700"
 #    - name: Install K3s
 #      ansible.builtin.shell: curl -sfL https://get.k3s.io | sh -
