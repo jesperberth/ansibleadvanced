@@ -1,6 +1,6 @@
 ---
 - name: Lookup Vault
-  hosts: awx
+  hosts: localhost
 
   tasks:
     - name: Get a list of all pods from any namespace
