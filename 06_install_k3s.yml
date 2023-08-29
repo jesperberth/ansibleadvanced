@@ -1,6 +1,7 @@
 ---
 - name: Lookup Vault
   hosts: awx
+  become: true
 
   tasks:
     - name: Update System Packages
