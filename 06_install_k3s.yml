@@ -18,6 +18,7 @@
       ansible.builtin.get_url:
         url: "https://storage.googleapis.com/kubernetes-release/release/stable.txt"
         dest: "~/stable.txt"
+        mode: "0644"
 
     - name: Set Kubectl release
       ansible.builtin.slurp:
@@ -32,11 +33,7 @@
       ansible.builtin.get_url:
         url: "https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_ver }}/bin/linux/amd64/kubectl"
         dest: "/usr/local/bin/kubectl"
-
-#    - name: Make kubectl executable
-#      ansible.builtin.file:
-#        path: "/usr/local/bin/kubectl"
-#        mode: +x
+        mode: "0755"
 
     - name: Create a symbolic link kubectl
       ansible.builtin.file:
@@ -55,6 +52,11 @@
         path: /usr/local/bin/k3s
       register: k3s_result
 
+    - name: Download k3s.io
+      ansible.builtin.get_url:
+        url: "https://get.k3s.io"
+        dest: .
+        mode: "0700"
 #    - name: Install K3s
 #      ansible.builtin.shell: curl -sfL https://get.k3s.io | sh -
 #      when: not k3s_result.stat.exists
