@@ -3,8 +3,25 @@
   hosts: awx
   become: true
 
+  vars:
+    awxoperater_version: "2.5.2"
+
   tasks:
     - name: Install make
       ansible.builtin.package:
         name: make
         state: present
+
+    - name: Git checkout AWX-Operator
+      ansible.builtin.git:
+        repo: 'https://github.com/ansible/awx-operator.git'
+        dest: ~/awx-operator
+        version: "{{ awxoperater_version }}"
+
+    - name: Set Namespace
+      ansible.builtin.shell: export NAMESPACE=awx
+
+    - name: Make deploy
+      community.general.make:
+        chdir: ~/awx-operator
+        target: deploy
