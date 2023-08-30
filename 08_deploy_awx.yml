@@ -1,0 +1,10 @@
+---
+- name: Deploy AWX
+  hosts: awx
+  become: true
+
+  tasks:
+    - name: Install make
+      ansible.builtin.package:
+        name: make
+        state: present
