@@ -13,7 +13,7 @@
 
     - name: Show response
       ansible.builtin.debug:
-        msg: "{{ cred }}"
+        msg: "{{ cred.secret.password }}"
 
     - name: Get a list of all pods from any namespace
       kubernetes.core.k8s_info:
