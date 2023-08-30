@@ -5,6 +5,7 @@
 
   vars:
     awxoperater_version: "2.5.2"
+    namespace: awx
 
   tasks:
     - name: Install make
@@ -18,10 +19,9 @@
         dest: ~/awx-operator
         version: "{{ awxoperater_version }}"
 
-    - name: Set Namespace
-      ansible.builtin.shell: export NAMESPACE=awx
-
     - name: Make deploy
       community.general.make:
         chdir: ~/awx-operator
         target: deploy
+      environment:
+        NAMESPACE: "{{ namespace }}"
