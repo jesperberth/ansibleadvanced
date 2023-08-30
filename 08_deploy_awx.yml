@@ -1,27 +1,66 @@
 ---
-- name: Deploy AWX Operator
-  hosts: awx
-  become: true
-
+- name: Deploy AWX
+  hosts: localhost
   vars:
+    vuser: jesbe
+    vpwd: P@ssw0rd
     awxoperater_version: "2.5.2"
     namespace: awx
 
   tasks:
-    - name: Install make
-      ansible.builtin.package:
-        name: make
+
+    - name: Lookup Vault
+      ansible.builtin.set_fact:
+        cred: "{{ lookup('community.hashi_vault.vault_kv2_get', 'AWX', url='http://ansible:8200', auth_method='userpass', username=vuser, password=vpwd) }}"
+
+    - name: Create Namespace awx
+      kubernetes.core.k8s:
+        name: "{{ namespace }}"
+        api_version: v1
+        kind: Namespace
         state: present
 
-    - name: Git checkout AWX-Operator
-      ansible.builtin.git:
-        repo: 'https://github.com/ansible/awx-operator.git'
-        dest: ~/awx-operator
-        version: "{{ awxoperater_version }}"
+    - name: Create Secret awx
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: awx-admin-password
+            namespace: "{{ namespace }}"
+          stringData:
+            password: "{{ cred.secret.password }}"
 
-    - name: Make deploy AWX-Operator
-      community.general.make:
-        chdir: ~/awx-operator
-        target: deploy
-      environment:
-        NAMESPACE: "{{ namespace }}"
+    - name: Deploy awx
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: awx.ansible.com/v1beta1
+          kind: AWX
+          metadata:
+            name: awx
+            namespace: "{{ namespace }}"
+
+    - name: Create Ingress for awx
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: networking.k8s.io/v1
+          kind: Ingress
+          metadata:
+            name: awx
+            namespace: "{{ namespace }}"
+            annotations:
+              kubernetes.io/ingress.class: traefik
+          spec:
+            rules:
+              - http:
+                  paths:
+                    - path: /
+                      pathType: Prefix
+                      backend:
+                        service:
+                          name: awx-service
+                          port:
+                            number: 80

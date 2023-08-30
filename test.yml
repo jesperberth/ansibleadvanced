@@ -1,0 +1,15 @@
+---
+- name: Test Kubernetes creds
+  hosts: localhost
+
+  vars:
+    vuser: jesbe
+    vpwd: P@ssw0rd
+
+  tasks:
+    - name: Get kubernetes Creds
+      ansible.builtin.include_tasks: tasks/kubernetes_cred.yml
+
+    - name: Debug
+      ansible.builtin.debug:
+        msg: "{{ kubernetes_env }}"
