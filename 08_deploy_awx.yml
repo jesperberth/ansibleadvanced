@@ -1,5 +1,5 @@
 ---
-- name: Deploy AWX
+- name: Deploy AWX Operator
   hosts: awx
   become: true
 
@@ -19,7 +19,7 @@
         dest: ~/awx-operator
         version: "{{ awxoperater_version }}"
 
-    - name: Make deploy
+    - name: Make deploy AWX-Operator
       community.general.make:
         chdir: ~/awx-operator
         target: deploy

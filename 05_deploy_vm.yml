@@ -13,7 +13,7 @@
 
   tasks:
     - name: Get Azure Creds
-      ansible.builtin.include_tasks: azure_cred.yml
+      ansible.builtin.include_tasks: tasks/azure_cred.yml
 
     - name: Get facts for all virtual networks
       azure.azcollection.azure_rm_virtualnetwork_info:

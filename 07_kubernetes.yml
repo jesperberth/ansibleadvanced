@@ -1,9 +1,0 @@
----
-- name: Lookup Vault
-  hosts: localhost
-
-  tasks:
-    - name: Get a list of all pods from any namespace
-      kubernetes.core.k8s_info:
-        kind: Pod
-      register: pod_list

@@ -1,5 +1,5 @@
 ---
-- name: Lookup Vault
+- name: Deploy AWX
   hosts: localhost
   vars:
     vuser: jesbe
@@ -12,10 +12,6 @@
     - name: Lookup Vault
       ansible.builtin.set_fact:
         cred: "{{ lookup('community.hashi_vault.vault_kv2_get', 'AWX', url='http://ansible:8200', auth_method='userpass', username=vuser, password=vpwd) }}"
-
-    - name: Show response
-      ansible.builtin.debug:
-        msg: "{{ cred.secret.password }}"
 
     - name: Create Namespace awx
       kubernetes.core.k8s:
