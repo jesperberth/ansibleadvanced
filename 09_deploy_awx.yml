@@ -5,6 +5,7 @@
     vuser: jesbe
     vpwd: P@ssw0rd
     awxoperater_version: "2.5.2"
+    namespace: awx
 
   tasks:
 
@@ -18,7 +19,7 @@
 
     - name: Create Namespace awx
       kubernetes.core.k8s:
-        name: awx
+        name: "{{ namespace }}"
         api_version: v1
         kind: Namespace
         state: present
@@ -31,24 +32,25 @@
           kind: Secret
           metadata:
             name: awx-admin-password
-            namespace: awx
+            namespace: "{{ namespace }}"
           stringData:
             password: "{{ cred.secret.password }}"
 
-    - name: Create awx operator
+    - name: Deploy awx
       kubernetes.core.k8s:
         state: present
         definition:
-          apiVersion: kustomize.config.k8s.io/v1beta1
-          kind: Kustomization
-          resources:
-            - "github.com/ansible/awx-operator/config/default?ref={{ awxoperater_version }}"
-          images:
-            - name: quay.io/ansible/awx-operator
-              newTag: "{{ awxoperater_version }}"
-          namespace: awx
+          apiVersion: awx.ansible.com/v1beta1
+          kind: AWX
+          metadata:
+            name: awx
+            namespace: "{{ namespace }}"
 
     - name: Get a list of all pods from any namespace
       kubernetes.core.k8s_info:
         kind: Pod
       register: pod_list
+
+    - name: List pods
+      ansible.builtin.debug:
+        msg: "{{ pod_list }}"
