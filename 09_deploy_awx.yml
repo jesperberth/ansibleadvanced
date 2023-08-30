@@ -22,6 +22,19 @@
         kind: Namespace
         state: present
 
+    - name: Create Secret awx
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Secret
+          type: Opaque
+          metadata:
+            name: awx-admin-password
+            namespace: awx
+          data:
+            password: "{{ cred.secret.password }}"
+
     - name: Get a list of all pods from any namespace
       kubernetes.core.k8s_info:
         kind: Pod
