@@ -4,6 +4,7 @@
   vars:
     vuser: jesbe
     vpwd: P@ssw0rd
+    awxoperater_version: "2.5.2"
 
   tasks:
 
@@ -33,6 +34,19 @@
             namespace: awx
           stringData:
             password: "{{ cred.secret.password }}"
+
+    - name: Create awx operator
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: kustomize.config.k8s.io/v1beta1
+          kind: Kustomization
+          resources:
+            - "github.com/ansible/awx-operator/config/default?ref={{ awxoperater_version }}"
+          images:
+            - name: quay.io/ansible/awx-operator
+              newTag: "{{ awxoperater_version }}"
+          namespace: awx
 
     - name: Get a list of all pods from any namespace
       kubernetes.core.k8s_info:
