@@ -32,7 +32,7 @@
             name: awx-admin-password
             namespace: awx
           data:
-            password: "{{ cred.secret.password }}"
+            password: Passw0rd!
 
     - name: Get a list of all pods from any namespace
       kubernetes.core.k8s_info:
