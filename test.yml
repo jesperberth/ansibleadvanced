@@ -13,3 +13,13 @@
     - name: Debug
       ansible.builtin.debug:
         msg: "{{ kubernetes_env }}"
+
+    - name: Get a list of all pods from any namespace
+      kubernetes.core.k8s_info:
+        kind: Pod
+      register: pod_list
+      environment: "{{ kubernetes_env }}"
+
+    - name: Debug
+      ansible.builtin.debug:
+        msg: "{{ pod_list }}"
