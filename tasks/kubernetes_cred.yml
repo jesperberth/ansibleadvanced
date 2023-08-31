@@ -9,3 +9,4 @@
       K8S_AUTH_API_KEY: "{{ cred.secret.token }}"
       K8S_AUTH_HOST: "{{ cred.secret.host }}"
       K8S_AUTH_USERNAME: "{{ cred.secret.user }}"
+      K8S_AUTH_VERIFY_SSL: "{{ cred.secret.ssl }}"
