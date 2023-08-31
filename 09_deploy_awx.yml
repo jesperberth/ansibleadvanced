@@ -21,6 +21,7 @@
         api_version: v1
         kind: Namespace
         state: present
+      environment: "{{ kubernetes_env }}"
 
     - name: Create Secret awx
       kubernetes.core.k8s:
@@ -33,6 +34,7 @@
             namespace: "{{ namespace }}"
           stringData:
             password: "{{ cred.secret.password }}"
+      environment: "{{ kubernetes_env }}"
 
     - name: Deploy awx
       kubernetes.core.k8s:
@@ -43,6 +45,7 @@
           metadata:
             name: awx
             namespace: "{{ namespace }}"
+      environment: "{{ kubernetes_env }}"
 
     - name: Create Ingress for awx
       kubernetes.core.k8s:
@@ -66,3 +69,4 @@
                           name: awx-service
                           port:
                             number: 80
+      environment: "{{ kubernetes_env }}"
