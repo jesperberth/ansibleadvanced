@@ -14,7 +14,7 @@
       ansible.builtin.debug:
         msg: "{{ kubernetes_env }}"
 
-    - name: Get a list of all pods from any namespace
+    - name: Get a list of all namespaces
       kubernetes.core.k8s_info:
         kind: Namespace
       register: ns_list
