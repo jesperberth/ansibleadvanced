@@ -8,6 +8,8 @@
     namespace: awx
 
   tasks:
+    - name: Get kubernetes Creds
+      ansible.builtin.include_tasks: tasks/kubernetes_cred.yml
 
     - name: Lookup Vault
       ansible.builtin.set_fact:
